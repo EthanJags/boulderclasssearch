@@ -10,19 +10,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-DATA_URL = "filt3.csv"
+DATA_URL = "CUScrape_with_embeddings.csv"
 
 @st.cache_data
 def blending_wonders():
     df = pd.read_csv(DATA_URL)
-    df['embeddings'] = df['embeddings'].apply(ast.literal_eval)
-    df['UnitDeranged'] = df['UnitDeranged'].apply(ast.literal_eval)
+    df['Embeddings'] = df['Embeddings'].apply(ast.literal_eval)
+    # df['UnitDeranged'] = df['UnitDeranged'].apply(ast.literal_eval)
     return df
 
 @st.cache_data
 def brewing_magic(search_query, df):
     search_embedding = get_embedding(search_query, engine='text-embedding-ada-002')
-    embeddings = np.array(df["embeddings"].tolist())
+    embeddings = np.array(df["Embeddings"].tolist())
     similarities = np.dot(embeddings, search_embedding) / (np.linalg.norm(embeddings, axis=1) * np.linalg.norm(search_embedding))
     df["similarities"] = similarities
     df.sort_values(by="similarities", ascending=False, inplace=True)
@@ -123,11 +123,11 @@ def main():
             if i < len(results):
                 display_result_card(results.iloc[i])
     #st.markdown("<p style='text-align: center; margin-top: 10px; color: #ccc;'>🚨 If the text is illegible, set the theme to DARK: 3 lines on the top right > settings > theme: dark 🚨</p>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: center; margin-top: 5px;'><a href='mailto:ethanjags@berkeley.edu?cc=aadityapore@boulder.edu&subject=Feedback%20-%20Berkeley%20Quest'>Leave feedback</a></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center; margin-top: 5px;'><a href='mailto:ethanjags@berkeley.edu?cc=aadityapore@boulder.edu&subject=Feedback%20-%20Boulder%20Quest'>Leave feedback</a></div>", unsafe_allow_html=True)
     #st.markdown("<p style='text-align: center; margin-top: 20px; color: #ccc;'>Currently in beta with upcoming features</p>", unsafe_allow_html=True)
     st.markdown("<hr margintop: 20px>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; margin-top: 25;'>Made with ♥︎ by <a href='https://ethanjagoda.webflow.io' target='_blank'>Ethan Jagoda</a> & <a href='mailto:Aadityapore@boulder.edu' target='_blank'>Aaditya Pore</a></p>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: center; margin-top: 10px;'><a href='https://www.buymeacoffee.com/jaysethi' target='_blank'><img src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png' alt='Buy Me A Coffee' width='150' ></a></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center; margin-top: 10px;'><a href='https://www.buymeacoffee.com/ethanjagoda' target='_blank'><img src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png' alt='Buy Me A Coffee' width='150' ></a></div>", unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
