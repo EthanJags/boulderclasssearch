@@ -66,7 +66,7 @@ def postRequest(url, body):
     if match:
         instructor = match.group(1) # Output: "Harsha Gangadharbatla"
     else:
-        name = "Name not found."
+        instructor = "Name not found."
 
     dates = (response["dates_html"])
     eval_links = (response["eval_links"])
@@ -87,7 +87,7 @@ def postRequest(url, body):
     #for section in sections
 
     writer.writerow([code, title, hours, description, instmode, instructor, dates, regreq, eval])
-
+    file.flush()
         # Print the response
     print(code, title, hours, description, instmode, instructor, dates, regreq, eval)
 
@@ -104,6 +104,7 @@ url = "https://classes.colorado.edu/api/?page=fose&route=details"
 contents = json.loads(contents)
 courses = contents["results"]
 classCode = "ACCT 3220"
+number = 0
 for course in courses:
     if classCode == course["code"]:
         continue
@@ -114,7 +115,8 @@ for course in courses:
     srcdb = "2237"
 
     bodyTemplate = f'%7B%22group%22%3A%22code%3A{department}%20{classCode}%22%2C%22key%22%3A%22crn%3A{crn}%22%2C%22srcdb%22%3A%22{srcdb}%22%2C%22matched%22%3A%22crn%3A{crn}%22%7D'
-    
+    number = number + 1
+    print(number)
     postRequest(url, bodyTemplate) # Input generic url and POST body into postRequest function
 
 
