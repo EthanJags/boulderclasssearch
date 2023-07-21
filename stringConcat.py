@@ -1,6 +1,6 @@
 import requests
 
-with open('filename.txt', 'r') as file:
+with open('message.txt', 'r') as file:
     contents = file.read()
 
 # URL to send the POST request to
