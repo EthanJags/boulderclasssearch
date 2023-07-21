@@ -55,7 +55,19 @@ def postRequest(url, body):
     title = (response["title"])
     description = (response["description"])
     instmode = (response["instmode_html"])
-    instructor = (response["instructor_info_html"])
+    instructorparse = (response["instructor_info_html"])
+    # Regular expression pattern to match the name inside the anchor tag
+    pattern = r">(.+)<"
+
+    # Use re.search to find the name within the anchor tag
+    match = re.search(pattern, instructorparse)
+
+    # Check if a match is found and extract the name from the first capturing group
+    if match:
+        instructor = match.group(1) # Output: "Harsha Gangadharbatla"
+    else:
+        name = "Name not found."
+
     dates = (response["dates_html"])
     eval_links = (response["eval_links"])
     regreq = (response["restrict_info"])
