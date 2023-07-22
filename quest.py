@@ -73,33 +73,35 @@ def main():
     with st.expander('Add Filters'):
         st.write("More filters coming soon 👀")
         st.write('Units:')
-        col1, col2, col3, col4, col5 = st.columns(5)
+        col1, col2, col3, col4, col5, col6 = st.columns(5)
         unit_filters = {
             '1 Unit': False,
+            '1.5 Units': False,
             '2 Units': False,
             '3 Units': False,
             '4 Units': False,
             '5+ Units': False,
         }
         unit_filters['1 Unit'] = col1.checkbox('1 Unit', value=unit_filters['1 Unit'])
-        unit_filters['2 Units'] = col2.checkbox('2 Units', value=unit_filters['2 Units'])
-        unit_filters['3 Units'] = col3.checkbox('3 Units', value=unit_filters['3 Units'])
-        unit_filters['4 Units'] = col4.checkbox('4 Units', value=unit_filters['4 Units'])
-        unit_filters['5 Units'] = col5.checkbox('5+ Units', value=unit_filters['5+ Units'])
+        unit_filters['1.5 Units'] = col2.checkbox('1.5 Units', value=unit_filters['1.5 Units'])
+        unit_filters['2 Units'] = col3.checkbox('2 Units', value=unit_filters['2 Units'])
+        unit_filters['3 Units'] = col4.checkbox('3 Units', value=unit_filters['3 Units'])
+        unit_filters['4 Units'] = col5.checkbox('4 Units', value=unit_filters['4 Units'])
+        unit_filters['5 Units'] = col6.checkbox('5+ Units', value=unit_filters['5+ Units'])
 
         st.write("Course Level:")
         col1, col2, col3, col4 = st.columns(4)
         course_level_filters = {
-            '99': False,
-            '100': False,
-            '200': False,
-            '300': False,
+            '2999': False,
+            '3000': False,
+            '5000': False,
+            '7000': False,
         }
 
-        course_level_filters['99'] = col1.checkbox('Lower Division', value=course_level_filters['99'])
-        course_level_filters['100'] = col2.checkbox('Upper Division', value=course_level_filters['100'])
-        course_level_filters['200'] = col3.checkbox('Graduate', value=course_level_filters['200'])
-        course_level_filters['300'] = col4.checkbox('Professional', value=course_level_filters['300'])
+        course_level_filters['2999'] = col1.checkbox('Lower Division', value=course_level_filters['99'])
+        course_level_filters['3000'] = col2.checkbox('Upper Division', value=course_level_filters['100'])
+        course_level_filters['5000'] = col3.checkbox('Graduate', value=course_level_filters['200'])
+        course_level_filters['7000'] = col4.checkbox('Professional', value=course_level_filters['300'])
         
     search_query = st.text_input("✨ Search for a course:", placeholder="Music but more techy...", key='search_input')
         
