@@ -72,6 +72,7 @@ def display_result_card(result):
             {description_content}
             <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {regreq} </p> 
             <p style='font-size: 14px; color: #ccc;'> Instruction Mode: {instruction_mode} </p>
+            <a href='{result['Class Evaluation Link']}' style="color: #ccc;">View Course Evaluations</a>
         </div>
     </a>
     """
