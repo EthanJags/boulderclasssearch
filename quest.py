@@ -33,7 +33,7 @@ def display_result_card(result):
     card_style = """
     <style>
         .card {
-            background-color: #222222;
+            background-color: #D4AF37;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
@@ -50,7 +50,8 @@ def display_result_card(result):
     # class_id = f"Class ID: {result['Class ID']}"
     # dept_link = f"Dept: <a href='{result['Department URL']}'>{result['Department']}</a>" if pd.notnull(result['Department URL']) else result['Department']
     instruction_mode = f"{result['Instruction Mode']}"
-    description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
+    description = result['Class Description']
+    description_content = f"<p>{description}</p>" if description(0) != '<' else ""
 
     # location = f"Location: <a href='{result['Building URL']}'>{result['Location']}</a>" if pd.notnull(result['Building URL']) else ""
 
