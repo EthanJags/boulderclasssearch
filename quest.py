@@ -106,10 +106,10 @@ def main():
             '7000': False,
         }
 
-        course_level_filters['2999'] = col1.checkbox('Lower Division', value=course_level_filters['99'])
-        course_level_filters['3000'] = col2.checkbox('Upper Division', value=course_level_filters['100'])
-        course_level_filters['5000'] = col3.checkbox('Graduate', value=course_level_filters['200'])
-        course_level_filters['7000'] = col4.checkbox('Professional', value=course_level_filters['300'])
+        course_level_filters['2999'] = col1.checkbox('Lower Division', value=course_level_filters['2999'])
+        course_level_filters['3000'] = col2.checkbox('Upper Division', value=course_level_filters['3000'])
+        course_level_filters['5000'] = col3.checkbox('Graduate', value=course_level_filters['5000'])
+        course_level_filters['7000'] = col4.checkbox('Professional', value=course_level_filters['7000'])
         
     search_query = st.text_input("✨ Search for a course:", placeholder="Music but more techy...", key='search_input')
         
