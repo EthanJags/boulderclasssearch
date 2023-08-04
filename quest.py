@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 import openai
 import os
+from bs4 import BeautifulSoup
 from openai.embeddings_utils import get_embedding
 from dotenv import load_dotenv
 
@@ -53,6 +54,12 @@ def display_result_card(result):
     #description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
     description_content = f"<p>{result['Class Description']}</p>" if pd.notna(result['Class Description']) and result['Class Description'].strip() else "No Description Listed"
     regreq = f"{result['Registration Requirements']}" if pd.notna(result['Registration Requirements']) and result['Registration Requirements'].strip() else "No Registration Requirements Listed"
+    instructor = f"{result['Instructor(s)']}"
+    namefilter = BeautifulSoup(instructor, 'html.parser')
+
+    # Extract the text content from the anchor tag
+    instructor_name = namefilter.a.text 
+
     # location = f"Location: <a href='{result['Building URL']}'>{result['Location']}</a>" if pd.notnull(result['Building URL']) else ""
 
     # if isinstance(result['Location'], float):
@@ -62,7 +69,7 @@ def display_result_card(result):
     <a href='{result['Class Evaluation Link']}' style='text-decoration: none; color: inherit;'>
         <div class="card">
             <h3>{class_name}</h3>
-            <p> Instructor Info: {result['Instructor(s)']}</p>
+            <p> Instructor Info: {instructor_name} </p>
             <p>{result['Credit Hours']} credit hour{'s' if result['Credit Hours'] != "1" else ''}  |  Dates: {result['Dates']} | Code: {result['Class Code']}</p>
             {description_content}
             <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {regreq} </p> 
