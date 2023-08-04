@@ -33,7 +33,7 @@ def display_result_card(result):
     card_style = """
     <style>
         .card {
-            background-color: #D4AF37;
+            background-color: #B08F26;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
