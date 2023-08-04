@@ -71,7 +71,7 @@ def display_result_card(result):
             <p>{result['Credit Hours']} credit hour{'s' if result['Credit Hours'] != "1" else ''}  |  Dates: {result['Dates']} | Code: {result['Class Code']}</p>
             {description_content}
             <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {regreq} </p> 
-            <p style='font-size: 14px; color: #ccc;'> {instruction_mode} </p>
+            <p style='font-size: 14px; color: #ccc;'> Instruction Mode: {instruction_mode} </p>
         </div>
     </a>
     """
@@ -141,10 +141,10 @@ def main():
             if i < len(results):
                 display_result_card(results.iloc[i])
     #st.markdown("<p style='text-align: center; margin-top: 10px; color: #ccc;'>🚨 If the text is illegible, set the theme to DARK: 3 lines on the top right > settings > theme: dark 🚨</p>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: center; margin-top: 5px;'><a href='mailto:ethanjags@berkeley.edu?cc=aadityapore@boulder.edu&subject=Feedback%20-%20Boulder%20Quest'>Leave feedback</a></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center; margin-top: 5px;'><a href='mailto:ethanjags@berkeley.edu?cc=aaditya.pore@colorado.edu&subject=Feedback%20-%20Boulder%20Quest'>Leave feedback</a></div>", unsafe_allow_html=True)
     #st.markdown("<p style='text-align: center; margin-top: 20px; color: #ccc;'>Currently in beta with upcoming features</p>", unsafe_allow_html=True)
     st.markdown("<hr margintop: 20px>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; margin-top: 25;'>Made with ♥︎ by <a href='https://ethanjagoda.webflow.io' target='_blank'>Ethan Jagoda</a> & <a href='mailto:Aadityapore@boulder.edu' target='_blank'>Aaditya Pore</a></p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; margin-top: 25;'>Made with ♥︎ by <a href='https://ethanjagoda.webflow.io' target='_blank'>Ethan Jagoda</a> & <a href='mailto:aaditya.pore@colorado.edu' target='_blank'>Aaditya Pore</a></p>", unsafe_allow_html=True)
     st.markdown("<div style='text-align: center; margin-top: 10px;'><a href='https://www.buymeacoffee.com/ethanjagoda' target='_blank'><img src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png' alt='Buy Me A Coffee' width='150' ></a></div>", unsafe_allow_html=True)
 
 
