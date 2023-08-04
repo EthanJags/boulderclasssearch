@@ -10,11 +10,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-DATA_URL = "CUScrape_with_embeddings.csv"
+DATA_URL = "CUScrape_with_embeddingsformatted.csv"
 
 @st.cache_data
 def blending_wonders():
     df = pd.read_csv(DATA_URL)
+    # console.log(df['Embeddings'])
     df['Embeddings'] = df['Embeddings'].apply(ast.literal_eval)
     # df['UnitDeranged'] = df['UnitDeranged'].apply(ast.literal_eval)
     return df
@@ -42,32 +43,39 @@ def display_result_card(result):
     </style>
     """
 
-    class_name = f"{result['Name']}"
-    class_code = f"Code: <a href='{result['Class URL']}'>{result['Class Code']}</a>"
-    class_id = f"Class ID: {result['Class ID']}"
-    dept_link = f"Dept: <a href='{result['Department URL']}'>{result['Department']}</a>" if pd.notnull(result['Department URL']) else result['Department']
+    class_name = f"{result['Class Name']}"
+    # class_code = f"Code: <a href='{result['Class URL']}'>{result['Class Code']}</a>"
+    # class_code = f"Code: <p>{result['Class Code']}</p>"
+    
+    # class_id = f"Class ID: {result['Class ID']}"
+    # dept_link = f"Dept: <a href='{result['Department URL']}'>{result['Department']}</a>" if pd.notnull(result['Department URL']) else result['Department']
     instruction_mode = f"{result['Instruction Mode']}"
-    location = f"Location: <a href='{result['Building URL']}'>{result['Location']}</a>" if pd.notnull(result['Building URL']) else ""
+    description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
 
-    if isinstance(result['Location'], float):
-        location = ""
+    # location = f"Location: <a href='{result['Building URL']}'>{result['Location']}</a>" if pd.notnull(result['Building URL']) else ""
+
+    # if isinstance(result['Location'], float):
+    #     location = ""
 
     card_content = f"""
-    <a href='{result['Class URL']}' style='text-decoration: none; color: inherit;'>
+    <a href='{result['Class Evaluation Link']}' style='text-decoration: none; color: inherit;'>
         <div class="card">
             <h3>{class_name}</h3>
-            <p>{result['Units']} unit{'s' if result['Units'] != "1" else ''}  |  {result['Time']}  |  {result['Meets Days']} | {class_code}</p>
-            <p>{result['Class Description']}</p>
-            <p style='font-size: 14px; color: #ccc;'>{class_id} | {instruction_mode} | {dept_link} | {location}</p>
+            <p> Instructor Info: {result['Instructor(s)']}</p>
+            <p>{result['Credit Hours']} credit hour{'s' if result['Credit Hours'] != "1" else ''}  |  Dates: {result['Dates']} | Code: {result['Class Code']}</p>
+            {description_content}
+            <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {result['Registration Requirements']}</p>
+            <p style='font-size: 14px; color: #ccc;'> {instruction_mode} </p>
         </div>
     </a>
     """
+            # <p style='font-size: 14px; color: #ccc;'> {instruction_mode} | {dept_link} | {location}</p>
 
     st.markdown(card_style, unsafe_allow_html=True)
     st.markdown(card_content, unsafe_allow_html=True)
 
 def main():
-    st.markdown("<h1 style='text-align: center;'><a href='https://berkeley.streamlit.app/' style='text-decoration: none; color: inherit;'>Boulder Quest🏔</a></h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'><a href='https://berkeley.streamlit.app/' style='text-decoration: none; color: inherit;'>Boulder Brain🏔</a></h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; margin-top: -10px; color: #ccc;'>Search your Fall 2023 courses using AI</p>", unsafe_allow_html=True)
 
     with st.expander('Add Filters'):
