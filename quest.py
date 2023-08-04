@@ -65,7 +65,7 @@ def display_result_card(result):
             <p> Instructor Info: {result['Instructor(s)']}</p>
             <p>{result['Credit Hours']} credit hour{'s' if result['Credit Hours'] != "1" else ''}  |  Dates: {result['Dates']} | Code: {result['Class Code']}</p>
             {description_content}
-            <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {regreq} </p> 
+            {regreq}
             <p style='font-size: 14px; color: #ccc;'> {instruction_mode} </p>
         </div>
     </a>
