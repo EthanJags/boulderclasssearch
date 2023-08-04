@@ -51,7 +51,7 @@ def display_result_card(result):
     # dept_link = f"Dept: <a href='{result['Department URL']}'>{result['Department']}</a>" if pd.notnull(result['Department URL']) else result['Department']
     instruction_mode = f"{result['Instruction Mode']}"
     #description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
-    description_content = f"<p>{result['Class Description']}</p>" if pd.notna(result['Class Description']) and result['Class Description'].strip() else ""
+    description_content = f"<p>{result['Class Description']}</p>" if pd.notna(result['Class Description']) and result['Class Description'].strip() else "No Description Listed"
 
     # location = f"Location: <a href='{result['Building URL']}'>{result['Location']}</a>" if pd.notnull(result['Building URL']) else ""
 
