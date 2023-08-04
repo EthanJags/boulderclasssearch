@@ -50,7 +50,8 @@ def display_result_card(result):
     # class_id = f"Class ID: {result['Class ID']}"
     # dept_link = f"Dept: <a href='{result['Department URL']}'>{result['Department']}</a>" if pd.notnull(result['Department URL']) else result['Department']
     instruction_mode = f"{result['Instruction Mode']}"
-    description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
+    #description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
+    description_content = f"<p>{result['Class Description']}</p>" if pd.notna(result['Class Description']) and result['Class Description'].strip() else ""
 
     # location = f"Location: <a href='{result['Building URL']}'>{result['Location']}</a>" if pd.notnull(result['Building URL']) else ""
 
@@ -75,7 +76,7 @@ def display_result_card(result):
     st.markdown(card_content, unsafe_allow_html=True)
 
 def main():
-    st.markdown("<h1 style='text-align: center;'><a href='https://berkeley.streamlit.app/' style='text-decoration: none; color: inherit;'>Boulder Brain🏔</a></h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'><a href='https://colorado.streamlit.app/' style='text-decoration: none; color: inherit;'>Boulder Brain🏔</a></h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; margin-top: -10px; color: #ccc;'>Search your Fall 2023 courses using AI</p>", unsafe_allow_html=True)
 
     with st.expander('Add Filters'):
