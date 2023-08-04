@@ -52,7 +52,7 @@ def display_result_card(result):
     instruction_mode = f"{result['Instruction Mode']}"
     #description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
     description_content = f"<p>{result['Class Description']}</p>" if pd.notna(result['Class Description']) and result['Class Description'].strip() else "No Description Listed"
-
+    regreq = f"<p>{result['Registration Requirements']}</p>" if pd.notna(result['Registration Requirements']) and result['Registration Requirements'].strip() else "No Registration Requirements Listed"
     # location = f"Location: <a href='{result['Building URL']}'>{result['Location']}</a>" if pd.notnull(result['Building URL']) else ""
 
     # if isinstance(result['Location'], float):
@@ -65,11 +65,13 @@ def display_result_card(result):
             <p> Instructor Info: {result['Instructor(s)']}</p>
             <p>{result['Credit Hours']} credit hour{'s' if result['Credit Hours'] != "1" else ''}  |  Dates: {result['Dates']} | Code: {result['Class Code']}</p>
             {description_content}
-            <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {result['Registration Requirements']}</p>
+            <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: </p> {regreq}
             <p style='font-size: 14px; color: #ccc;'> {instruction_mode} </p>
         </div>
     </a>
     """
+
+    # <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {result['Registration Requirements']}</p>
             # <p style='font-size: 14px; color: #ccc;'> {instruction_mode} | {dept_link} | {location}</p>
 
     st.markdown(card_style, unsafe_allow_html=True)
