@@ -33,7 +33,7 @@ def display_result_card(result):
     card_style = """
     <style>
         .card {
-            background-color: #222222;
+            background-color: #B08F26;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
@@ -50,7 +50,13 @@ def display_result_card(result):
     # class_id = f"Class ID: {result['Class ID']}"
     # dept_link = f"Dept: <a href='{result['Department URL']}'>{result['Department']}</a>" if pd.notnull(result['Department URL']) else result['Department']
     instruction_mode = f"{result['Instruction Mode']}"
-    description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
+    #description_content = f"<p>{result['Class Description']}</p>" if result['Class Description'] else ""
+    description_content = f"<p>{result['Class Description']}</p>" if pd.notna(result['Class Description']) and result['Class Description'].strip() else "No Description Listed"
+    regreq = f"{result['Registration Requirements']}" if pd.notna(result['Registration Requirements']) and result['Registration Requirements'].strip() else "No Registration Requirements Listed"
+    instructor = f"{result['Instructor(s)']}"
+    start_index = instructor.find('>') + 1
+    end_index = instructor.rfind('<')
+    instructor_name = instructor[start_index:end_index]
 
     # location = f"Location: <a href='{result['Building URL']}'>{result['Location']}</a>" if pd.notnull(result['Building URL']) else ""
 
@@ -61,14 +67,17 @@ def display_result_card(result):
     <a href='{result['Class Evaluation Link']}' style='text-decoration: none; color: inherit;'>
         <div class="card">
             <h3>{class_name}</h3>
-            <p> Instructor Info: {result['Instructor(s)']}</p>
+            <p> Instructor Info: {instructor_name}</p>
             <p>{result['Credit Hours']} credit hour{'s' if result['Credit Hours'] != "1" else ''}  |  Dates: {result['Dates']} | Code: {result['Class Code']}</p>
             {description_content}
-            <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {result['Registration Requirements']}</p>
-            <p style='font-size: 14px; color: #ccc;'> {instruction_mode} </p>
+            <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {regreq} </p> 
+            <p style='font-size: 14px; color: #ccc;'> Instruction Mode: {instruction_mode} </p>
+            <a href='{result['Class Evaluation Link']}' style="color: #ccc;">View Course Evaluations</a>
         </div>
     </a>
     """
+
+    # <p style='font-size: 14px; color: #ccc;'> Registration Restrictions: {result['Registration Requirements']}</p>
             # <p style='font-size: 14px; color: #ccc;'> {instruction_mode} | {dept_link} | {location}</p>
 
     st.markdown(card_style, unsafe_allow_html=True)
@@ -81,33 +90,35 @@ def main():
     with st.expander('Add Filters'):
         st.write("More filters coming soon 👀")
         st.write('Units:')
-        col1, col2, col3, col4, col5 = st.columns(5)
+        col1, col2, col3, col4, col5, col6 = st.columns(6)
         unit_filters = {
             '1 Unit': False,
+            '1.5 Units': False,
             '2 Units': False,
             '3 Units': False,
             '4 Units': False,
             '5+ Units': False,
         }
         unit_filters['1 Unit'] = col1.checkbox('1 Unit', value=unit_filters['1 Unit'])
-        unit_filters['2 Units'] = col2.checkbox('2 Units', value=unit_filters['2 Units'])
-        unit_filters['3 Units'] = col3.checkbox('3 Units', value=unit_filters['3 Units'])
-        unit_filters['4 Units'] = col4.checkbox('4 Units', value=unit_filters['4 Units'])
-        unit_filters['5 Units'] = col5.checkbox('5+ Units', value=unit_filters['5+ Units'])
+        unit_filters['1.5 Units'] = col2.checkbox('1.5 Units', value=unit_filters['1.5 Units'])
+        unit_filters['2 Units'] = col3.checkbox('2 Units', value=unit_filters['2 Units'])
+        unit_filters['3 Units'] = col4.checkbox('3 Units', value=unit_filters['3 Units'])
+        unit_filters['4 Units'] = col5.checkbox('4 Units', value=unit_filters['4 Units'])
+        unit_filters['5 Units'] = col6.checkbox('5+ Units', value=unit_filters['5+ Units'])
 
         st.write("Course Level:")
         col1, col2, col3, col4 = st.columns(4)
         course_level_filters = {
-            '99': False,
-            '100': False,
-            '200': False,
-            '300': False,
+            '2999': False,
+            '3000': False,
+            '5000': False,
+            '7000': False,
         }
 
-        course_level_filters['99'] = col1.checkbox('Lower Division', value=course_level_filters['99'])
-        course_level_filters['100'] = col2.checkbox('Upper Division', value=course_level_filters['100'])
-        course_level_filters['200'] = col3.checkbox('Graduate', value=course_level_filters['200'])
-        course_level_filters['300'] = col4.checkbox('Professional', value=course_level_filters['300'])
+        course_level_filters['2999'] = col1.checkbox('Lower Division', value=course_level_filters['2999'])
+        course_level_filters['3000'] = col2.checkbox('Upper Division', value=course_level_filters['3000'])
+        course_level_filters['5000'] = col3.checkbox('Graduate', value=course_level_filters['5000'])
+        course_level_filters['7000'] = col4.checkbox('Professional', value=course_level_filters['7000'])
         
     search_query = st.text_input("✨ Search for a course:", placeholder="Music but more techy...", key='search_input')
         
@@ -131,10 +142,10 @@ def main():
             if i < len(results):
                 display_result_card(results.iloc[i])
     #st.markdown("<p style='text-align: center; margin-top: 10px; color: #ccc;'>🚨 If the text is illegible, set the theme to DARK: 3 lines on the top right > settings > theme: dark 🚨</p>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: center; margin-top: 5px;'><a href='mailto:ethanjags@berkeley.edu?cc=aadityapore@boulder.edu&subject=Feedback%20-%20Boulder%20Quest'>Leave feedback</a></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center; margin-top: 5px;'><a href='mailto:ethanjags@berkeley.edu?cc=aaditya.pore@colorado.edu&subject=Feedback%20-%20Boulder%20Quest'>Leave feedback</a></div>", unsafe_allow_html=True)
     #st.markdown("<p style='text-align: center; margin-top: 20px; color: #ccc;'>Currently in beta with upcoming features</p>", unsafe_allow_html=True)
     st.markdown("<hr margintop: 20px>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; margin-top: 25;'>Made with ♥︎ by <a href='https://ethanjagoda.webflow.io' target='_blank'>Ethan Jagoda</a> & <a href='mailto:Aadityapore@boulder.edu' target='_blank'>Aaditya Pore</a></p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; margin-top: 25;'>Made with ♥︎ by <a href='https://ethanjagoda.webflow.io' target='_blank'>Ethan Jagoda</a> & <a href='mailto:aaditya.pore@colorado.edu' target='_blank'>Aaditya Pore</a></p>", unsafe_allow_html=True)
     st.markdown("<div style='text-align: center; margin-top: 10px;'><a href='https://www.buymeacoffee.com/ethanjagoda' target='_blank'><img src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png' alt='Buy Me A Coffee' width='150' ></a></div>", unsafe_allow_html=True)
 
 
