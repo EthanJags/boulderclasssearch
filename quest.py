@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-DATA_URL = "CUScrape_with_embeddingsformatted.csv"
+DATA_URL = "CUScrapeFilters.csv"
 
 @st.cache_data
 def blending_wonders():
@@ -109,16 +109,16 @@ def main():
         st.write("Course Level:")
         col1, col2, col3, col4 = st.columns(4)
         course_level_filters = {
-            '2999': False,
-            '3000': False,
-            '5000': False,
-            '7000': False,
+            'lower': False,
+            'upper': False,
+            'masters': False,
+            'doctorate': False,
         }
 
-        course_level_filters['2999'] = col1.checkbox('Lower Division', value=course_level_filters['2999'])
-        course_level_filters['3000'] = col2.checkbox('Upper Division', value=course_level_filters['3000'])
-        course_level_filters['5000'] = col3.checkbox('Graduate', value=course_level_filters['5000'])
-        course_level_filters['7000'] = col4.checkbox('Professional', value=course_level_filters['7000'])
+        course_level_filters['lower'] = col1.checkbox('Lower Division', value=course_level_filters['lower'])
+        course_level_filters['upper'] = col2.checkbox('Upper Division', value=course_level_filters['upper'])
+        course_level_filters['masters'] = col3.checkbox('Graduate', value=course_level_filters['masters'])
+        course_level_filters['doctorate'] = col4.checkbox('Professional', value=course_level_filters['doctorate'])
         
     search_query = st.text_input("✨ Search for a course:", placeholder="Music but more techy...", key='search_input')
         
@@ -128,13 +128,13 @@ def main():
         # Filter by the selected units
         selected_unit_filters = [unit[0] for unit, value in unit_filters.items() if value]
         if selected_unit_filters:
-            df = df[df['UnitDeranged'].apply(lambda x: any(val in selected_unit_filters for val in x))]
+            df = df[df['Credit Hours'].apply(lambda x: any(val in selected_unit_filters for val in x))]
         
         # Filter by the selected course levels
         selected_level_filters = [unit[0] for unit, value in course_level_filters.items() if value]
 
         if selected_level_filters:
-            df = df[df['DIV'].apply(lambda x: any(val in selected_level_filters for val in x))]
+            df = df[df['Class Type'].apply(lambda x: any(val in selected_level_filters for val in x))]
 
         results = brewing_magic(search_query, df)
         
