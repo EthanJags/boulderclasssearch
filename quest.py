@@ -125,11 +125,11 @@ def main():
     if search_query:
         df = blending_wonders()
         
-        # Filter by the selected units
         selected_unit_filters = [unit[0] for unit, value in unit_filters.items() if value]
+
         if selected_unit_filters:
-            df = df[df['Credit Hours'].apply(lambda x: any(val in selected_unit_filters for val in x))]
-        
+            df = df[df['Credit Hours'].apply(lambda x: x in selected_unit_filters)]
+
         # Filter by the selected course levels
         selected_level_filters = [unit[0] for unit, value in course_level_filters.items() if value]
 
@@ -145,7 +145,7 @@ def main():
     st.markdown("<div style='text-align: center; margin-top: 5px;'><a href='mailto:ethanjags@berkeley.edu?cc=aaditya.pore@colorado.edu&subject=Feedback%20-%20Boulder%20Quest'>Leave feedback</a></div>", unsafe_allow_html=True)
     #st.markdown("<p style='text-align: center; margin-top: 20px; color: #ccc;'>Currently in beta with upcoming features</p>", unsafe_allow_html=True)
     st.markdown("<hr margintop: 20px>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; margin-top: 25;'>Made with ♥︎ by <a href='https://ethanjagoda.webflow.io' target='_blank'>Ethan Jagoda</a> & <a href='mailto:aaditya.pore@colorado.edu' target='_blank'>Aaditya Pore</a></p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; margin-top: 25;'>Made with ♥︎ by <a href='https://ethanjagoda.com' target='_blank'>Ethan Jagoda</a> & <a href='mailto:aaditya.pore@colorado.edu' target='_blank'>Aaditya Pore</a></p>", unsafe_allow_html=True)
     st.markdown("<div style='text-align: center; margin-top: 10px;'><a href='https://www.buymeacoffee.com/ethanjagoda' target='_blank'><img src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png' alt='Buy Me A Coffee' width='150' ></a></div>", unsafe_allow_html=True)
 
 
